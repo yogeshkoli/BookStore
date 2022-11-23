@@ -23,6 +23,7 @@ namespace BookStore.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     DisplayOrder = table.Column<int>(type: "int", nullable: false),
                     CreatedDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.ComputedColumn)
                 },
                 constraints: table =>
                 {

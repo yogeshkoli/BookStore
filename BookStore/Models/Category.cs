@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace BookStore.Models
 
         public int DisplayOrder { get; set; }
 
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
     }
 }

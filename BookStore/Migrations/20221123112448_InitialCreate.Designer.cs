@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookStore.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20221123061017_InitialCreate")]
+    [Migration("20221123112448_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,6 +28,7 @@ namespace BookStore.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDateTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("DisplayOrder")

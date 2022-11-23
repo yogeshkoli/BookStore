@@ -26,6 +26,7 @@ namespace BookStore.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDateTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("DisplayOrder")
