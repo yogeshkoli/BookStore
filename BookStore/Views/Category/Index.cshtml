@@ -1,3 +1,4 @@
+@model IEnumerable<Category>
 @{
     ViewData["Title"] = "Category";
 }
@@ -5,5 +6,25 @@
 <h1>@ViewData["Title"]</h1>
 
 <div>
-    
+    <table class="table table-bordered table-striped" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>Category Name</th>
+                <th>Display Order</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Name
+                    </td>
+                     <td>
+                        @item.DisplayOrder
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>  
 </div>

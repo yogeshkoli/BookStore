@@ -8,19 +8,23 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BookStore.Models;
+using BookStore.Data;
 
 public class CategoryController : Controller
 {
     private readonly ILogger<CategoryController> _logger;
+    private readonly StoreContext _store_context;
 
-    public CategoryController(ILogger<CategoryController> logger)
+    public CategoryController(ILogger<CategoryController> logger, StoreContext store_context)
     {
         _logger = logger;
+        _store_context = store_context;
     }
 
     public IActionResult Index()
     {
-        return View();
+        IEnumerable<Category> categoryList = _store_context.Categories;
+        return View(categoryList);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
