@@ -27,9 +27,17 @@ public class CategoryController : Controller
         return View(categoryList);
     }
 
-    public IActionResult Create()
-    {
+    public IActionResult Create(){
         return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Create(Category category)
+    {
+        _store_context.Categories.Add(category);
+        _store_context.SaveChanges();
+        return RedirectToAction("Index");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
