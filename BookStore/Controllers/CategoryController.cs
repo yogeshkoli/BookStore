@@ -36,6 +36,10 @@ public class CategoryController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Create(Category category)
     {
+        if(category.Name == category.DisplayOrder.ToString())
+        {
+            ModelState.AddModelError("Name", "The DisplayOrder cannot exactly match the Name.");
+        }
         if (ModelState.IsValid)
         {
             _store_context.Categories.Add(category);
