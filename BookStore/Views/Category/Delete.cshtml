@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = "Delete Category";
 }
-
 <div>
     <form method="post" asp-action="Delete">
          <input asp-for="Id" hidden />
@@ -26,3 +25,9 @@
         </div>
     </form>
 </div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

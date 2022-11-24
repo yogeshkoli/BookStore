@@ -44,6 +44,7 @@ public class CategoryController : Controller
         {
             _store_context.Categories.Add(category);
             _store_context.SaveChanges();
+            TempData["success"] = "Category Created successfully!";
             return RedirectToAction("Index");
         }
         return View();
@@ -79,6 +80,7 @@ public class CategoryController : Controller
         {
             _store_context.Categories.Update(category);
             _store_context.SaveChanges();
+            TempData["success"] = "Category Updated successfully!";
             return RedirectToAction("Index");
         }
         return View();
@@ -92,22 +94,20 @@ public class CategoryController : Controller
             return NotFound();
         }
 
-        var category = _store_context.Categories.FirstOrDefault(u=>u.Id==id);
-
-        _logger.LogInformation("CAT" + category.Name);
+        var category = _store_context.Categories.Find(id);
 
         if (category == null)
         {
             return NotFound();
         }
 
-        return View();
+        return View(category);
     }
 
     [HttpPost, ActionName("Delete")]
     public IActionResult DeleteHandler(int? id)
     {
-        var category = _store_context.Categories.FirstOrDefault(u => u.Id == id);
+        var category = _store_context.Categories.Find(id);
 
         if (category == null)
         {
@@ -116,6 +116,7 @@ public class CategoryController : Controller
 
         _store_context.Categories.Remove(category);
         _store_context.SaveChanges();
+        TempData["success"] = "Category Deleted successfully!";
         return RedirectToAction("Index");
 
     }
