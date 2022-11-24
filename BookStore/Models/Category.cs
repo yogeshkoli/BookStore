@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,8 @@ namespace BookStore.Models
 
         [Required]
         public string Name { get; set; }
-
+        
+        [DisplayNameAttribute("Display Order")]
         public int DisplayOrder { get; set; }
 
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Computed)]
