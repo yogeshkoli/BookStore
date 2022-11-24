@@ -49,6 +49,40 @@ public class CategoryController : Controller
         return View();
     }
 
+    public IActionResult Edit(int? id)
+    {
+        if(id == null || id == 0)
+        {
+            return NotFound();
+        }
+
+        var category = _store_context.Categories.Find(id);
+        // var category = _store_context.Categories.FirstOrDefault(u=>u.Id==id);
+
+        if(category == null)
+        {
+            return NotFound();
+        }
+        
+        return View(category);
+    }
+
+    [HttpPost]
+    public IActionResult Edit(Category category)
+    {
+        if(category.Name == category.DisplayOrder.ToString())
+        {
+            ModelState.AddModelError("Name", "The DisplayOrder cannot exactly match the Name.");
+        }
+        if(ModelState.IsValid)
+        {
+            _store_context.Categories.Update(category);
+            _store_context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        return View();
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
