@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace BookStore.Migrations
+namespace BookStore.DataAccess.Migrations
 {
     public partial class InitialCreate : Migration
     {

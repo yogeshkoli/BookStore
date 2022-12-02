@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BookStore.Migrations
+namespace BookStore.DataAccess.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20221123112448_InitialCreate")]
+    [Migration("20221202094247_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
