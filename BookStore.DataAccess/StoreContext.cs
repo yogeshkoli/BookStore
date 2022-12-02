@@ -1,4 +1,4 @@
-namespace BookStore.Data;
+namespace BookStore.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using BookStore.Models;
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BookStore.Models;
-using BookStore.Data;
+using BookStore.DataAccess;
 
 public class CategoryController : Controller
 {
