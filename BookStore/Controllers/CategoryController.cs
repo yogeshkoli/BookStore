@@ -5,21 +5,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BookStore.Models;
 using BookStore.DataAccess;
+using BookStore.DataAccess.Repository.IRepository;
 
 public class CategoryController : Controller
 {
     private readonly ILogger<CategoryController> _logger;
-    private readonly StoreContext _store_context;
+    // private readonly StoreContext _store_context;
+    private readonly ICategoryRepository _icagetoryRepository;
 
-    public CategoryController(ILogger<CategoryController> logger, StoreContext store_context)
+    public CategoryController(ILogger<CategoryController> logger, ICategoryRepository icategoryRepository)
     {
         _logger = logger;
-        _store_context = store_context;
+        // _store_context = store_context;
+        _icagetoryRepository = icategoryRepository;
     }
 
     public IActionResult Index()
     {
-        IEnumerable<Category> categoryList = _store_context.Categories;
+        IEnumerable<Category> categoryList = _icagetoryRepository.GetAll();
         return View(categoryList);
     }
 
@@ -38,8 +41,8 @@ public class CategoryController : Controller
         }
         if (ModelState.IsValid)
         {
-            _store_context.Categories.Add(category);
-            _store_context.SaveChanges();
+            _icagetoryRepository.Add(category);
+            _icagetoryRepository.Save();
             TempData["success"] = "Category Created successfully!";
             return RedirectToAction("Index");
         }
@@ -53,8 +56,8 @@ public class CategoryController : Controller
             return NotFound();
         }
 
-        var category = _store_context.Categories.Find(id);
-        // var category = _store_context.Categories.FirstOrDefault(u=>u.Id==id);
+        // var category = _store_context.Categories.Find(id);
+        var category = _icagetoryRepository.GetFirstOrDefault(u=>u.Id==id);
 
         if (category == null)
         {
@@ -74,8 +77,8 @@ public class CategoryController : Controller
         }
         if (ModelState.IsValid)
         {
-            _store_context.Categories.Update(category);
-            _store_context.SaveChanges();
+            _icagetoryRepository.Update(category);
+            _icagetoryRepository.Save();
             TempData["success"] = "Category Updated successfully!";
             return RedirectToAction("Index");
         }
@@ -90,7 +93,7 @@ public class CategoryController : Controller
             return NotFound();
         }
 
-        var category = _store_context.Categories.Find(id);
+        var category = _icagetoryRepository.GetFirstOrDefault(c => c.Id == id);
 
         if (category == null)
         {
@@ -103,15 +106,15 @@ public class CategoryController : Controller
     [HttpPost, ActionName("Delete")]
     public IActionResult DeleteHandler(int? id)
     {
-        var category = _store_context.Categories.Find(id);
+        var category = _icagetoryRepository.GetFirstOrDefault(c => c.Id == id);
 
         if (category == null)
         {
             return NotFound();
         }
 
-        _store_context.Categories.Remove(category);
-        _store_context.SaveChanges();
+        _icagetoryRepository.Remove(category);
+        _icagetoryRepository.Save();
         TempData["success"] = "Category Deleted successfully!";
         return RedirectToAction("Index");
 
