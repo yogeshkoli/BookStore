@@ -1,4 +1,6 @@
 using BookStore.DataAccess;
+using BookStore.DataAccess.Repository;
+using BookStore.DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<StoreContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+// registor the Repository 
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
