@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BookStore.DataAccess.Repository.IRepository;
-using BookStore.Models;
 
 namespace BookStore.DataAccess.Repository
 {
-    public class CategoryRepository : Repository<Category>, ICategoryRepository
+    public class UnitOfWork : IUnitOfWork
     {
+        public ICategoryRepository iCategoryRepository { get; private set; }
+
         private readonly StoreContext _storeContext;
 
-        public CategoryRepository(StoreContext storeContext) : base(storeContext)
+        public UnitOfWork(StoreContext storeContext)
         {
             _storeContext = storeContext;
+            iCategoryRepository = new CategoryRepository(_storeContext);
         }
 
-        public void Update(Category category)
+        public void Save()
         {
-            _storeContext.Update(category);
+           _storeContext.SaveChanges();
         }
     }
 }
