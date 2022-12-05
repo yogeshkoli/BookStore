@@ -19,7 +19,7 @@ namespace BookStore.DataAccess.Repository
 
         public void Update(CoverType coverType)
         {
-            throw new NotImplementedException();
+            _storeConext.Update(coverType);
         }
     }
 }
