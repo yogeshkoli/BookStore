@@ -11,18 +11,18 @@ public class CategoryController : Controller
 {
     private readonly ILogger<CategoryController> _logger;
     // private readonly StoreContext _store_context;
-    private readonly ICategoryRepository _icagetoryRepository;
+    private readonly IUnitOfWork _iUnitOfWork;
 
-    public CategoryController(ILogger<CategoryController> logger, ICategoryRepository icategoryRepository)
+    public CategoryController(ILogger<CategoryController> logger, IUnitOfWork iUnitOfWork)
     {
         _logger = logger;
         // _store_context = store_context;
-        _icagetoryRepository = icategoryRepository;
+        _iUnitOfWork = iUnitOfWork;
     }
 
     public IActionResult Index()
     {
-        IEnumerable<Category> categoryList = _icagetoryRepository.GetAll();
+        IEnumerable<Category> categoryList = _iUnitOfWork.iCategoryRepository.GetAll();
         return View(categoryList);
     }
 
@@ -41,8 +41,8 @@ public class CategoryController : Controller
         }
         if (ModelState.IsValid)
         {
-            _icagetoryRepository.Add(category);
-            _icagetoryRepository.Save();
+            _iUnitOfWork.iCategoryRepository.Add(category);
+            _iUnitOfWork.Save();
             TempData["success"] = "Category Created successfully!";
             return RedirectToAction("Index");
         }
@@ -57,7 +57,7 @@ public class CategoryController : Controller
         }
 
         // var category = _store_context.Categories.Find(id);
-        var category = _icagetoryRepository.GetFirstOrDefault(u=>u.Id==id);
+        var category = _iUnitOfWork.iCategoryRepository.GetFirstOrDefault(u=>u.Id==id);
 
         if (category == null)
         {
@@ -77,8 +77,8 @@ public class CategoryController : Controller
         }
         if (ModelState.IsValid)
         {
-            _icagetoryRepository.Update(category);
-            _icagetoryRepository.Save();
+            _iUnitOfWork.iCategoryRepository.Update(category);
+            _iUnitOfWork.Save();
             TempData["success"] = "Category Updated successfully!";
             return RedirectToAction("Index");
         }
@@ -93,7 +93,7 @@ public class CategoryController : Controller
             return NotFound();
         }
 
-        var category = _icagetoryRepository.GetFirstOrDefault(c => c.Id == id);
+        var category = _iUnitOfWork.iCategoryRepository.GetFirstOrDefault(c => c.Id == id);
 
         if (category == null)
         {
@@ -106,15 +106,15 @@ public class CategoryController : Controller
     [HttpPost, ActionName("Delete")]
     public IActionResult DeleteHandler(int? id)
     {
-        var category = _icagetoryRepository.GetFirstOrDefault(c => c.Id == id);
+        var category = _iUnitOfWork.iCategoryRepository.GetFirstOrDefault(c => c.Id == id);
 
         if (category == null)
         {
             return NotFound();
         }
 
-        _icagetoryRepository.Remove(category);
-        _icagetoryRepository.Save();
+        _iUnitOfWork.iCategoryRepository.Remove(category);
+        _iUnitOfWork.Save();
         TempData["success"] = "Category Deleted successfully!";
         return RedirectToAction("Index");
 
