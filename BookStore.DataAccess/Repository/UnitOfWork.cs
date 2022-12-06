@@ -12,6 +12,8 @@ namespace BookStore.DataAccess.Repository
 
         public ICoverTypeRepository iCoverTypeRepository { get; private set; }
 
+        public IProductRepository iProductRepository { get; private set; }
+
         private readonly StoreContext _storeContext;
 
         public UnitOfWork(StoreContext storeContext)
@@ -19,6 +21,7 @@ namespace BookStore.DataAccess.Repository
             _storeContext = storeContext;
             iCategoryRepository = new CategoryRepository(_storeContext);
             iCoverTypeRepository = new CoverTypeRepository(_storeContext);
+            iProductRepository = new ProductRepository(_storeContext);
         }
 
         public void Save()
