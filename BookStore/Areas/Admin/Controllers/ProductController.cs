@@ -88,8 +88,7 @@ public class ProductController : Controller
         return View(product);
     }
 
-    [HttpPost]
-    [ActionName('Delete')]
+    [HttpPost, ActionName("Delete")]
     public IActionResult handleDelete(int? id)
     {
         var product = _iUnitOfWork.iProductRepository.GetFirstOrDefault(p => p.Id == id);

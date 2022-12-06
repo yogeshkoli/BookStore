@@ -36,8 +36,6 @@ namespace BookStore.DataAccess.Repository
 
                 _storeContext.Update(productObject);
             }
-
-            
         }
     }
 }
