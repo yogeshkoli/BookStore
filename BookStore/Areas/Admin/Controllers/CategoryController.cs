@@ -1,4 +1,4 @@
-namespace BookStore.Controllers;
+namespace BookStore.Areas.Admin.Controllers;
 
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
