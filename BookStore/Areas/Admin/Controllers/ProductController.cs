@@ -5,6 +5,7 @@ using BookStore.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BookStore.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 public class ProductController : Controller
 {
@@ -44,22 +45,41 @@ public class ProductController : Controller
         return View();
     }
 
-    public IActionResult Edit(int? id)
+    [HttpGet]
+    public IActionResult Upsert(int? id)
     {
+        Product product = new();
+
+        IEnumerable<SelectListItem> CategoryList = _iUnitOfWork.iCategoryRepository.GetAll().Select(
+            c => new SelectListItem{
+                Text = c.Name,
+                Value = c.Id.ToString()
+            }
+        );
+
+        IEnumerable<SelectListItem> CoverTypeList = _iUnitOfWork.iCoverTypeRepository.GetAll().Select(
+            ct => new SelectListItem{
+                Text = ct.Name,
+                Value = ct.Id.ToString()
+            }
+        );
+
         if (id == null || id == 0)
         {
-            return NotFound();
+            ViewBag.CategoryList = CategoryList;
+            ViewBag.CoverTypeList = CoverTypeList;
+           return View(product);
         }
 
-        var product = _iUnitOfWork.iProductRepository.GetFirstOrDefault(p => p.Id == id);
+        // var product = _iUnitOfWork.iProductRepository.GetFirstOrDefault(p => p.Id == id);
 
-        if (product == null)
-        {
-            return NotFound();
-        }
+        // if (product == null)
+        // {
+        //     return NotFound();
+        // }
 
         return View(product);
-    }
+    } 
 
     [HttpPost]
     [ValidateAntiForgeryToken]
