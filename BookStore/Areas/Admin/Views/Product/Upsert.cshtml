@@ -70,8 +70,8 @@
             </div>
 
              <div class="mb-3">
-                <label asp-for="CoverTypeId"></label>
-                <select asp-for="CoverTypeId" asp-items="ViewBag.CoverTypeList" class="form-control">
+                <label asp-for="CoverTypeId"></label> 
+                <select asp-for="CoverTypeId" asp-items="@(ViewData["CoverTypeList"] as IEnumerable<SelectListItem>)" class="form-control">
                     <option disabled>-Select Cover Type-</option>
                 </select>
                 <span asp-validation-for="CoverTypeId" class="text-danger"></span>
