@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using BookStore.Models.ViewModels;
 
 public class ProductController : Controller
 {
@@ -48,27 +49,25 @@ public class ProductController : Controller
     [HttpGet]
     public IActionResult Upsert(int? id)
     {
-        Product product = new();
-
-        IEnumerable<SelectListItem> CategoryList = _iUnitOfWork.iCategoryRepository.GetAll().Select(
-            c => new SelectListItem{
-                Text = c.Name,
-                Value = c.Id.ToString()
-            }
-        );
-
-        IEnumerable<SelectListItem> CoverTypeList = _iUnitOfWork.iCoverTypeRepository.GetAll().Select(
-            ct => new SelectListItem{
-                Text = ct.Name,
-                Value = ct.Id.ToString()
-            }
-        );
+        ProductViewModel productViewModel = new(){
+            Product = new(),
+            CategoryList = _iUnitOfWork.iCategoryRepository.GetAll().Select(
+                c => new SelectListItem{
+                    Text = c.Name,
+                    Value = c.Id.ToString()
+                }
+            ),
+            CoverTypeList = _iUnitOfWork.iCoverTypeRepository.GetAll().Select(
+                ct => new SelectListItem{
+                    Text = ct.Name,
+                    Value = ct.Id.ToString()
+                }
+            )
+        };
 
         if (id == null || id == 0)
         {
-            ViewBag.CategoryList = CategoryList;
-            ViewData["CoverTypeList"] = CoverTypeList;
-           return View(product);
+           return View(productViewModel);
         }
 
         // var product = _iUnitOfWork.iProductRepository.GetFirstOrDefault(p => p.Id == id);
@@ -78,7 +77,9 @@ public class ProductController : Controller
         //     return NotFound();
         // }
 
-        return View(product);
+        productViewModel.Product = _iUnitOfWork.iProductRepository.GetFirstOrDefault(p => p.Id == id);
+
+        return View(productViewModel);
     } 
 
     [HttpPost]
